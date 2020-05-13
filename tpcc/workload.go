@@ -239,7 +239,7 @@ func (w *Workloader) Run(ctx context.Context, threadID int) error {
 	txn := w.txns[txnIndex]
 
 	start := time.Now()
-	err := txn.action(ctx, threadID)
+	err = txn.action(ctx, threadID)
 
 	measurement.Measure(txn.name, time.Now().Sub(start), err)
 
