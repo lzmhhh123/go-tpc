@@ -169,6 +169,11 @@ func getTPCCState(ctx context.Context) *tpccState {
 func (w *Workloader) Run(ctx context.Context, threadID int) error {
 	s := getTPCCState(ctx)
 
+	_, err := s.Conn.ExecContext(ctx, "set session tidb_readonly_table=\"tpcc.bmsql_item/416642892755107841\";")
+	if err != nil {
+		return err
+	}
+
 	if s.newOrderStmts == nil {
 		s.newOrderStmts = map[string]*sql.Stmt{
 			newOrderSelectCustomer: prepareStmt(ctx, s.Conn, newOrderSelectCustomer),
